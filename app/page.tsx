@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type CrestKey =
   | "courage"
@@ -21,6 +21,77 @@ type Choice = {
 type Question = {
   title: string;
   choices: Choice[];
+};
+
+const crestCharacters: Record<
+  CrestKey,
+  {
+    partnerLabel: string;
+    images: Array<{
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      label: string;
+    }>;
+  }
+> = {
+  courage: {
+    partnerLabel: "신태일 (아구몬)",
+    images: [
+      { src: "/characters/taichi-1.webp", alt: "어린 시절 신태일", width: 200, height: 400, label: "어릴 적 태일" },
+      { src: "/characters/taichi-2.webp", alt: "성장한 신태일", width: 224, height: 673, label: "성장한 태일" },
+    ],
+  },
+  friendship: {
+    partnerLabel: "매튜 (파피몬)",
+    images: [
+      { src: "/characters/matthew-1.webp", alt: "어린 시절 매튜", width: 145, height: 453, label: "어릴 적 매튜" },
+      { src: "/characters/matthew-2.webp", alt: "성장한 매튜", width: 193, height: 705, label: "성장한 매튜" },
+    ],
+  },
+  purity: {
+    partnerLabel: "이미나 (팔몬)",
+    images: [
+      { src: "/characters/mimi-1.webp", alt: "어린 시절 이미나", width: 240, height: 464, label: "어릴 적 미나" },
+      { src: "/characters/mimi-2.webp", alt: "성장한 이미나", width: 251, height: 626, label: "성장한 미나" },
+    ],
+  },
+  love: {
+    partnerLabel: "한소라 (피요몬)",
+    images: [
+      { src: "/characters/sora-1.webp", alt: "어린 시절 한소라", width: 240, height: 439, label: "어릴 적 소라" },
+      { src: "/characters/sora-2.webp", alt: "성장한 한소라", width: 101, height: 327, label: "성장한 소라" },
+    ],
+  },
+  knowledge: {
+    partnerLabel: "장한솔 (텐타몬)",
+    images: [
+      { src: "/characters/koshiro-1.webp", alt: "어린 시절 장한솔", width: 240, height: 480, label: "어릴 적 한솔" },
+      { src: "/characters/koshiro-2.webp", alt: "성장한 장한솔", width: 286, height: 666, label: "성장한 한솔" },
+    ],
+  },
+  reliability: {
+    partnerLabel: "정석 (고마몬)",
+    images: [
+      { src: "/characters/joe-1.webp", alt: "어린 시절 정석", width: 240, height: 480, label: "어릴 적 정석" },
+      { src: "/characters/joe-2.webp", alt: "성장한 정석", width: 110, height: 353, label: "성장한 정석" },
+    ],
+  },
+  hope: {
+    partnerLabel: "리키 (파닥몬)",
+    images: [
+      { src: "/characters/takeru-1.webp", alt: "어린 시절 리키", width: 240, height: 480, label: "어릴 적 리키" },
+      { src: "/characters/takeru-2.webp", alt: "성장한 리키", width: 293, height: 687, label: "성장한 리키" },
+    ],
+  },
+  light: {
+    partnerLabel: "신나리 (가트몬 / 테일몬)",
+    images: [
+      { src: "/characters/hikari-1.webp", alt: "어린 시절 신나리", width: 240, height: 480, label: "어릴 적 나리" },
+      { src: "/characters/hikari-2.webp", alt: "성장한 신나리", width: 300, height: 641, label: "성장한 나리" },
+    ],
+  },
 };
 
 const crests: Record<
@@ -233,6 +304,19 @@ const questions: Question[] = [
   },
 ];
 
+function getWeightedScores(answers: CrestKey[]) {
+  const scores = Object.keys(crests).reduce(
+    (acc, key) => ({ ...acc, [key]: 0 }),
+    {} as Record<CrestKey, number>,
+  );
+
+  answers.forEach((answer, index) => {
+    scores[answer] += index === questions.length - 1 ? 1.5 : 1;
+  });
+
+  return scores;
+}
+
 const clubPhotos: Array<{ src: string; alt: string }> = [
   { src: "/club/anione-1.jpg", alt: "애니원 월간 애니감상회 활동 사진" },
   { src: "/club/anione-2.jpg", alt: "애니원 홍대 모임 활동 사진" },
@@ -316,9 +400,11 @@ export default function Home() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<CrestKey[]>([]);
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [sharedResult, setSharedResult] = useState<CrestKey | null>(null);
   const [sharedUserId, setSharedUserId] = useState<string | null>(null);
   const [isClubOpen, setIsClubOpen] = useState(false);
+  const resultCaptureRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -377,18 +463,11 @@ export default function Home() {
   }, []);
 
   const result = useMemo(() => {
-    const scores = Object.keys(crests).reduce(
-      (acc, key) => ({ ...acc, [key]: 0 }),
-      {} as Record<CrestKey, number>,
-    );
+    const weightedScores = getWeightedScores(answers);
 
-    answers.forEach((answer) => {
-      scores[answer] += 1;
-    });
-
-    return (Object.keys(scores) as CrestKey[]).sort((a, b) => {
-      if (scores[b] !== scores[a]) {
-        return scores[b] - scores[a];
+    return (Object.keys(weightedScores) as CrestKey[]).sort((a, b) => {
+      if (weightedScores[b] !== weightedScores[a]) {
+        return weightedScores[b] - weightedScores[a];
       }
 
       return answers.lastIndexOf(b) - answers.lastIndexOf(a);
@@ -418,6 +497,7 @@ export default function Home() {
     setStep(0);
     setAnswers([]);
     setShareState("idle");
+    setSaveState("idle");
     setSharedResult(null);
     setSharedUserId(null);
     setHasStarted(false);
@@ -427,6 +507,7 @@ export default function Home() {
   const startQuiz = () => {
     setSharedResult(null);
     setSharedUserId(null);
+    setSaveState("idle");
     setHasStarted(true);
     window.history.replaceState(null, "", "/");
   };
@@ -488,6 +569,66 @@ export default function Home() {
     }
   };
 
+  const saveResultImage = async (crest: (typeof crests)[CrestKey]) => {
+    if (!resultCaptureRef.current || saveState === "saving") {
+      return;
+    }
+
+    setSaveState("saving");
+
+    try {
+      const resultCapture = resultCaptureRef.current;
+      const images = Array.from(resultCapture.querySelectorAll("img"));
+
+      await Promise.all(
+        images.map(async (image) => {
+          if (image.complete) {
+            return;
+          }
+
+          if (image.decode) {
+            await image.decode().catch(() => undefined);
+            return;
+          }
+
+          await new Promise<void>((resolve) => {
+            image.addEventListener("load", () => resolve(), { once: true });
+            image.addEventListener("error", () => resolve(), { once: true });
+          });
+        }),
+      );
+
+      const { toPng } = await import("html-to-image");
+      const dataUrl = await Promise.race([
+        toPng(resultCapture, {
+          backgroundColor: "#e9f7ff",
+          cacheBust: true,
+          pixelRatio: Math.min(window.devicePixelRatio || 2, 2),
+          filter: (node) => {
+            if (!(node instanceof HTMLElement)) {
+              return true;
+            }
+
+            return node.dataset.captureHidden !== "true";
+          },
+        }),
+        new Promise<string>((_, reject) => {
+          window.setTimeout(() => reject(new Error("Result image capture timed out")), 12000);
+        }),
+      ]);
+      const link = document.createElement("a");
+
+      link.download = `digimon-crest-${crest.english.toLowerCase().replaceAll(" ", "-")}.png`;
+      link.href = dataUrl;
+      link.click();
+      setSaveState("saved");
+      window.setTimeout(() => setSaveState("idle"), 4000);
+    } catch {
+      setSaveState("error");
+      window.setTimeout(() => setSaveState("idle"), 4200);
+    }
+  };
+
   if (!hasStarted && !sharedResult) {
     const crestKeys = Object.keys(crests) as CrestKey[];
 
@@ -545,6 +686,8 @@ export default function Home() {
   if (isDone || sharedResult) {
     const resultKey = sharedResult ?? result;
     const top = crests[resultKey];
+    const characterSet = crestCharacters[resultKey];
+    const weightedScores = getWeightedScores(answers);
     const ranking = (Object.keys(crests) as CrestKey[])
       .map((key) => ({
         key,
@@ -556,12 +699,20 @@ export default function Home() {
           if (b.key === sharedResult) return 1;
         }
 
-        return b.score - a.score;
+        if (weightedScores[b.key] !== weightedScores[a.key]) {
+          return weightedScores[b.key] - weightedScores[a.key];
+        }
+
+        return answers.lastIndexOf(b.key) - answers.lastIndexOf(a.key);
       });
 
     return (
       <>
-        <main className="shell result-shell" style={{ "--crest-color": top.color } as React.CSSProperties}>
+        <main
+          className="shell result-shell"
+          ref={resultCaptureRef}
+          style={{ "--crest-color": top.color } as React.CSSProperties}
+        >
           <section className="result-card">
             <div className="result-symbol">
               <Image src={top.image} alt={`${top.name}의 문장`} width={180} height={180} priority />
@@ -576,9 +727,33 @@ export default function Home() {
                 <span key={keyword}>{keyword}</span>
               ))}
             </div>
-            <div className="result-actions">
+            <div className="character-showcase" aria-label={`${top.name}의 문장 캐릭터 이미지`}>
+              <p>{characterSet.partnerLabel}</p>
+              <div className="character-pair">
+                {characterSet.images.map((character) => (
+                  <figure key={character.src}>
+                    <Image
+                      src={character.src}
+                      alt={character.alt}
+                      width={character.width}
+                      height={character.height}
+                    />
+                    <figcaption>{character.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+            <div className="result-actions" data-capture-hidden="true">
               <button className="primary-button" onClick={() => shareResult(resultKey, top)} type="button">
                 친구에게 공유하기
+              </button>
+              <button
+                className="secondary-button"
+                disabled={saveState === "saving"}
+                onClick={() => saveResultImage(top)}
+                type="button"
+              >
+                {saveState === "saving" ? "이미지 저장 중..." : "내 결과 저장하기"}
               </button>
               <button className="secondary-button" onClick={sharedResult ? startQuiz : reset} type="button">
                 {sharedResult ? "나도 검사하기" : "다시 검사하기"}
@@ -587,10 +762,20 @@ export default function Home() {
                 애니원 모임 소개
               </button>
             </div>
-            <p className="share-feedback" aria-live="polite">
-              {shareState === "copied" ? "링크가 복사됐습니다" : " "}
+            <p className="share-feedback" aria-live="polite" data-capture-hidden="true">
+              {shareState === "copied"
+                ? "링크가 복사됐습니다"
+                : saveState === "saved"
+                  ? "결과 이미지가 저장됐습니다"
+                  : saveState === "error"
+                    ? "이미지 저장에 실패했습니다"
+                    : " "}
             </p>
-            {sharedUserId && <p className="share-id">공유 ID {sharedUserId}</p>}
+            {sharedUserId && (
+              <p className="share-id" data-capture-hidden="true">
+                공유 ID {sharedUserId}
+              </p>
+            )}
           </section>
 
           <aside className="ranking-panel" aria-label="문장별 점수">
@@ -613,7 +798,9 @@ export default function Home() {
                 </div>
               );
             })}
-            <AdBanner label="결과 페이지 배너" />
+            <div data-capture-hidden="true">
+              <AdBanner label="결과 페이지 배너" />
+            </div>
           </aside>
         </main>
         {isClubOpen && <AnimeOneModal onClose={() => setIsClubOpen(false)} />}
