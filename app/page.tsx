@@ -39,56 +39,56 @@ const crestCharacters: Record<
   courage: {
     partnerLabel: "신태일 (아구몬)",
     images: [
-      { src: "/characters/taichi-1.webp", alt: "어린 시절 신태일", width: 200, height: 400, label: "어릴 적 태일" },
+      { src: "/characters/taichi-1.png", alt: "어린 시절 신태일", width: 200, height: 400, label: "어릴 적 태일" },
       { src: "/characters/taichi-2.webp", alt: "성장한 신태일", width: 224, height: 673, label: "성장한 태일" },
     ],
   },
   friendship: {
     partnerLabel: "매튜 (파피몬)",
     images: [
-      { src: "/characters/matthew-1.webp", alt: "어린 시절 매튜", width: 145, height: 453, label: "어릴 적 매튜" },
+      { src: "/characters/matthew-1.png", alt: "어린 시절 매튜", width: 145, height: 453, label: "어릴 적 매튜" },
       { src: "/characters/matthew-2.webp", alt: "성장한 매튜", width: 193, height: 705, label: "성장한 매튜" },
     ],
   },
   purity: {
     partnerLabel: "이미나 (팔몬)",
     images: [
-      { src: "/characters/mimi-1.webp", alt: "어린 시절 이미나", width: 240, height: 464, label: "어릴 적 미나" },
+      { src: "/characters/mimi-1.png", alt: "어린 시절 이미나", width: 240, height: 464, label: "어릴 적 미나" },
       { src: "/characters/mimi-2.webp", alt: "성장한 이미나", width: 251, height: 626, label: "성장한 미나" },
     ],
   },
   love: {
     partnerLabel: "한소라 (피요몬)",
     images: [
-      { src: "/characters/sora-1.webp", alt: "어린 시절 한소라", width: 240, height: 439, label: "어릴 적 소라" },
+      { src: "/characters/sora-1.png", alt: "어린 시절 한소라", width: 240, height: 439, label: "어릴 적 소라" },
       { src: "/characters/sora-2.webp", alt: "성장한 한소라", width: 101, height: 327, label: "성장한 소라" },
     ],
   },
   knowledge: {
     partnerLabel: "장한솔 (텐타몬)",
     images: [
-      { src: "/characters/koshiro-1.webp", alt: "어린 시절 장한솔", width: 240, height: 480, label: "어릴 적 한솔" },
+      { src: "/characters/koshiro-1.png", alt: "어린 시절 장한솔", width: 240, height: 480, label: "어릴 적 한솔" },
       { src: "/characters/koshiro-2.webp", alt: "성장한 장한솔", width: 286, height: 666, label: "성장한 한솔" },
     ],
   },
   reliability: {
     partnerLabel: "정석 (고마몬)",
     images: [
-      { src: "/characters/joe-1.webp", alt: "어린 시절 정석", width: 240, height: 480, label: "어릴 적 정석" },
+      { src: "/characters/joe-1.png", alt: "어린 시절 정석", width: 240, height: 480, label: "어릴 적 정석" },
       { src: "/characters/joe-2.webp", alt: "성장한 정석", width: 110, height: 353, label: "성장한 정석" },
     ],
   },
   hope: {
     partnerLabel: "리키 (파닥몬)",
     images: [
-      { src: "/characters/takeru-1.webp", alt: "어린 시절 리키", width: 240, height: 480, label: "어릴 적 리키" },
+      { src: "/characters/takeru-1.png", alt: "어린 시절 리키", width: 240, height: 480, label: "어릴 적 리키" },
       { src: "/characters/takeru-2.webp", alt: "성장한 리키", width: 293, height: 687, label: "성장한 리키" },
     ],
   },
   light: {
     partnerLabel: "신나리 (가트몬 / 테일몬)",
     images: [
-      { src: "/characters/hikari-1.webp", alt: "어린 시절 신나리", width: 240, height: 480, label: "어릴 적 나리" },
+      { src: "/characters/hikari-1.png", alt: "어린 시절 신나리", width: 240, height: 480, label: "어릴 적 나리" },
       { src: "/characters/hikari-2.webp", alt: "성장한 신나리", width: 300, height: 641, label: "성장한 나리" },
     ],
   },
