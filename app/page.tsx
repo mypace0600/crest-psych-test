@@ -714,9 +714,23 @@ export default function Home() {
           style={{ "--crest-color": top.color } as React.CSSProperties}
         >
           <section className="result-card">
-            <div className="result-symbol">
-              <Image src={top.image} alt={`${top.name}의 문장`} width={180} height={180} priority />
+            <div className="result-visual" aria-label={`${top.name}의 문장과 캐릭터 이미지`}>
+              <div className="result-symbol">
+                <Image src={top.image} alt={`${top.name}의 문장`} width={180} height={180} priority />
+              </div>
+              <div className="result-character-stack">
+                {characterSet.images.map((character) => (
+                  <Image
+                    src={character.src}
+                    alt={character.alt}
+                    width={character.width}
+                    height={character.height}
+                    key={character.src}
+                  />
+                ))}
+              </div>
             </div>
+            <p className="character-partner">{characterSet.partnerLabel}</p>
             <p className="eyebrow">{sharedResult ? "공유된 문장" : "당신의 문장"}</p>
             <h1>{top.name}의 문장</h1>
             <p className="english">{top.english} · {top.owner}</p>
@@ -726,22 +740,6 @@ export default function Home() {
               {top.keywords.map((keyword) => (
                 <span key={keyword}>{keyword}</span>
               ))}
-            </div>
-            <div className="character-showcase" aria-label={`${top.name}의 문장 캐릭터 이미지`}>
-              <p>{characterSet.partnerLabel}</p>
-              <div className="character-pair">
-                {characterSet.images.map((character) => (
-                  <figure key={character.src}>
-                    <Image
-                      src={character.src}
-                      alt={character.alt}
-                      width={character.width}
-                      height={character.height}
-                    />
-                    <figcaption>{character.label}</figcaption>
-                  </figure>
-                ))}
-              </div>
             </div>
             <div className="result-actions" data-capture-hidden="true">
               <button className="primary-button" onClick={() => shareResult(resultKey, top)} type="button">

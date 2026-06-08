@@ -613,12 +613,19 @@ button {
   z-index: 1;
 }
 
+.result-visual {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
 .result-symbol {
-  width: 220px;
-  height: 220px;
+  width: 190px;
+  height: 190px;
   display: grid;
+  flex: 0 0 auto;
   place-items: center;
-  margin-bottom: 20px;
   border: 1px solid rgba(255, 255, 255, 0.72);
   background: rgba(255, 255, 255, 0.44);
 }
@@ -626,9 +633,37 @@ button {
 .result-symbol img {
   width: auto;
   height: auto;
-  max-width: 170px;
-  max-height: 170px;
+  max-width: 146px;
+  max-height: 146px;
   object-fit: contain;
+}
+
+.result-character-stack {
+  min-height: 190px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 12px 0;
+  border: 1px solid color-mix(in srgb, var(--crest-color) 22%, transparent);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0 1px, transparent 1px 16px),
+    rgba(255, 255, 255, 0.36);
+}
+
+.result-character-stack img {
+  width: auto;
+  height: auto;
+  max-width: 78px;
+  max-height: 172px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 16px rgba(7, 54, 87, 0.16));
+}
+
+.character-partner {
+  margin: 0 0 6px;
+  color: var(--crest-color);
+  font-size: 14px;
+  font-weight: 900;
 }
 
 .eyebrow {
@@ -681,53 +716,6 @@ button {
   color: var(--ink);
   border: 1px solid rgba(7, 54, 87, 0.14);
   background: rgba(255, 255, 255, 0.52);
-  font-weight: 900;
-}
-
-.character-showcase {
-  margin-top: 24px;
-}
-
-.character-showcase > p {
-  margin: 0 0 10px;
-  color: var(--crest-color);
-  font-size: 14px;
-  font-weight: 900;
-}
-
-.character-pair {
-  display: flex;
-  align-items: flex-end;
-  gap: 16px;
-}
-
-.character-pair figure {
-  width: 142px;
-  min-height: 212px;
-  display: grid;
-  align-items: flex-end;
-  justify-items: center;
-  margin: 0;
-  padding: 12px 10px 10px;
-  border: 1px solid color-mix(in srgb, var(--crest-color) 26%, transparent);
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0 1px, transparent 1px 16px),
-    rgba(255, 255, 255, 0.44);
-}
-
-.character-pair img {
-  width: auto;
-  height: auto;
-  max-width: 104px;
-  max-height: 174px;
-  object-fit: contain;
-  filter: drop-shadow(0 14px 16px rgba(7, 54, 87, 0.16));
-}
-
-.character-pair figcaption {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
   font-weight: 900;
 }
 
@@ -987,15 +975,37 @@ button {
     display: none;
   }
 
+  .result-visual {
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
   .result-symbol {
     width: 118px;
     height: 118px;
-    margin: 0 auto 16px;
   }
 
   .result-symbol img {
     max-width: 92px;
     max-height: 92px;
+  }
+
+  .result-character-stack {
+    min-height: 118px;
+    gap: 4px;
+    padding: 7px 8px 0;
+  }
+
+  .result-character-stack img {
+    max-width: 42px;
+    max-height: 108px;
+  }
+
+  .character-partner {
+    margin-bottom: 7px;
+    text-align: center;
+    font-size: 13px;
   }
 
   .eyebrow {
@@ -1038,36 +1048,6 @@ button {
   .keywords span {
     padding: 8px 11px;
     font-size: 14px;
-  }
-
-  .character-showcase {
-    margin-top: 18px;
-    text-align: center;
-  }
-
-  .character-showcase > p {
-    margin-bottom: 9px;
-    font-size: 13px;
-  }
-
-  .character-pair {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .character-pair figure {
-    width: min(46%, 140px);
-    min-height: 182px;
-    padding: 10px 8px 9px;
-  }
-
-  .character-pair img {
-    max-width: 90px;
-    max-height: 142px;
-  }
-
-  .character-pair figcaption {
-    font-size: 11px;
   }
 
   .ranking-panel {
