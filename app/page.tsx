@@ -719,14 +719,16 @@ export default function Home() {
                 <Image src={top.image} alt={`${top.name}의 문장`} width={180} height={180} priority />
               </div>
               <div className="result-character-stack">
-                {characterSet.images.map((character) => (
-                  <Image
-                    src={character.src}
-                    alt={character.alt}
-                    width={character.width}
-                    height={character.height}
-                    key={character.src}
-                  />
+                {characterSet.images.map((character, index) => (
+                  <figure key={character.src}>
+                    <figcaption>{index === 0 ? "기존 생각" : "바뀐 생각"}</figcaption>
+                    <Image
+                      src={character.src}
+                      alt={character.alt}
+                      width={character.width}
+                      height={character.height}
+                    />
+                  </figure>
                 ))}
               </div>
             </div>

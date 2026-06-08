@@ -650,11 +650,33 @@ button {
     rgba(255, 255, 255, 0.36);
 }
 
+.result-character-stack figure {
+  height: 178px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  align-items: end;
+  gap: 6px;
+  margin: 0;
+}
+
+.result-character-stack figcaption {
+  align-self: start;
+  padding: 4px 6px;
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--crest-color) 24%, transparent);
+  background: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .result-character-stack img {
   width: auto;
   height: auto;
   max-width: 78px;
-  max-height: 172px;
+  max-height: 146px;
   object-fit: contain;
   filter: drop-shadow(0 14px 16px rgba(7, 54, 87, 0.16));
 }
@@ -997,9 +1019,19 @@ button {
     padding: 7px 8px 0;
   }
 
+  .result-character-stack figure {
+    height: 108px;
+    gap: 4px;
+  }
+
+  .result-character-stack figcaption {
+    padding: 3px 4px;
+    font-size: 9px;
+  }
+
   .result-character-stack img {
     max-width: 42px;
-    max-height: 108px;
+    max-height: 86px;
   }
 
   .character-partner {
