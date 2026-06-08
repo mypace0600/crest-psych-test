@@ -653,30 +653,16 @@ button {
 .result-character-stack figure {
   height: 178px;
   display: grid;
-  grid-template-rows: auto 1fr;
   justify-items: center;
-  align-items: end;
-  gap: 6px;
+  align-items: flex-end;
   margin: 0;
-}
-
-.result-character-stack figcaption {
-  align-self: start;
-  padding: 4px 6px;
-  color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--crest-color) 24%, transparent);
-  background: rgba(255, 255, 255, 0.62);
-  font-size: 11px;
-  font-weight: 900;
-  line-height: 1;
-  white-space: nowrap;
 }
 
 .result-character-stack img {
   width: auto;
   height: auto;
   max-width: 78px;
-  max-height: 146px;
+  max-height: 172px;
   object-fit: contain;
   filter: drop-shadow(0 14px 16px rgba(7, 54, 87, 0.16));
 }
@@ -724,6 +710,35 @@ button {
   font-size: 18px;
   line-height: 1.8;
   font-weight: 500;
+}
+
+.thought-shift {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 620px;
+  margin-top: 20px;
+}
+
+.thought-shift section {
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--crest-color) 24%, transparent);
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.thought-shift span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--crest-color);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.thought-shift strong {
+  display: block;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.45;
 }
 
 .keywords {
@@ -1021,17 +1036,11 @@ button {
 
   .result-character-stack figure {
     height: 108px;
-    gap: 4px;
-  }
-
-  .result-character-stack figcaption {
-    padding: 3px 4px;
-    font-size: 9px;
   }
 
   .result-character-stack img {
     max-width: 42px;
-    max-height: 86px;
+    max-height: 108px;
   }
 
   .character-partner {
@@ -1069,6 +1078,27 @@ button {
     margin-top: 14px;
     font-size: 16px;
     line-height: 1.68;
+  }
+
+  .thought-shift {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .thought-shift section {
+    padding: 12px;
+    text-align: left;
+  }
+
+  .thought-shift span {
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .thought-shift strong {
+    font-size: 16px;
+    line-height: 1.45;
   }
 
   .keywords {

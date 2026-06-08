@@ -94,6 +94,41 @@ const crestCharacters: Record<
   },
 };
 
+const thoughtShifts: Record<CrestKey, { before: string; after: string }> = {
+  courage: {
+    before: "무섭지 않은 것이 용기다",
+    after: "무섭지만 책임지는 것이 용기다",
+  },
+  friendship: {
+    before: "혼자 강해야 한다",
+    after: "서로 기대고 믿을 수 있어야 한다",
+  },
+  love: {
+    before: "사랑은 희생이다",
+    after: "나도 사랑받을 가치가 있다",
+  },
+  purity: {
+    before: "순수는 철없는 것이다",
+    after: "순수는 옳고 그름을 바라보는 힘이다",
+  },
+  knowledge: {
+    before: "지식은 많이 아는 것이다",
+    after: "지식은 자신을 이해하는 것이다",
+  },
+  reliability: {
+    before: "실수하면 안 된다",
+    after: "부족해도 끝까지 책임진다",
+  },
+  hope: {
+    before: "잘 될 거라 믿는 것이다",
+    after: "안 될 것 같아도 포기하지 않는 것이다",
+  },
+  light: {
+    before: "착한 사람이 되는 것이다",
+    after: "사람의 가능성을 비춰주는 것이다",
+  },
+};
+
 const crests: Record<
   CrestKey,
   {
@@ -687,6 +722,7 @@ export default function Home() {
     const resultKey = sharedResult ?? result;
     const top = crests[resultKey];
     const characterSet = crestCharacters[resultKey];
+    const thoughtShift = thoughtShifts[resultKey];
     const weightedScores = getWeightedScores(answers);
     const ranking = (Object.keys(crests) as CrestKey[])
       .map((key) => ({
@@ -719,9 +755,8 @@ export default function Home() {
                 <Image src={top.image} alt={`${top.name}의 문장`} width={180} height={180} priority />
               </div>
               <div className="result-character-stack">
-                {characterSet.images.map((character, index) => (
+                {characterSet.images.map((character) => (
                   <figure key={character.src}>
-                    <figcaption>{index === 0 ? "기존 생각" : "바뀐 생각"}</figcaption>
                     <Image
                       src={character.src}
                       alt={character.alt}
@@ -738,6 +773,16 @@ export default function Home() {
             <p className="english">{top.english} · {top.owner}</p>
             <h2>{top.headline}</h2>
             <p className="description">{top.description}</p>
+            <div className="thought-shift" aria-label={`${top.name}의 문장 생각 변화`}>
+              <section>
+                <span>기존 생각</span>
+                <strong>{thoughtShift.before}</strong>
+              </section>
+              <section>
+                <span>바뀐 생각</span>
+                <strong>{thoughtShift.after}</strong>
+              </section>
+            </div>
             <div className="keywords">
               {top.keywords.map((keyword) => (
                 <span key={keyword}>{keyword}</span>
