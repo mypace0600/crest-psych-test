@@ -15,7 +15,7 @@ type CrestKey =
 
 type Choice = {
   label: string;
-  crest: CrestKey;
+  crests: CrestKey[];
 };
 
 type Question = {
@@ -234,122 +234,68 @@ const crests: Record<
 
 const questions: Question[] = [
   {
-    title: "친구들과 갑자기 디지털 월드에 떨어졌다. 가장 먼저 무엇을 할까?",
+    title: "위기 상황에서 나는 가장 먼저...",
     choices: [
-      { label: "가까이 있는 친구들이 다치지 않았는지 확인한다", crest: "love" },
-      { label: "인원을 세고 모두가 있는지 빠르게 확인한다", crest: "reliability" },
-      { label: "흩어진 친구들을 한곳으로 모은다", crest: "friendship" },
-      { label: "불안해하는 사람부터 진정시킨다", crest: "light" },
-      { label: "주변 지형과 위험 요소를 관찰한다", crest: "knowledge" },
-      { label: "무섭지만 앞장서서 안전한 길을 찾아본다", crest: "courage" },
-      { label: "이 상황에서도 빠져나갈 방법이 있을 거라 말한다", crest: "hope" },
-      { label: "놀란 감정을 숨기지 않고 솔직하게 털어놓는다", crest: "purity" },
+      { label: "무섭더라도 먼저 움직인다", crests: ["courage", "hope"] },
+      { label: "사람들이 다치지 않았는지 챙긴다", crests: ["love", "light"] },
+      { label: "상황을 파악하고 방법을 찾는다", crests: ["knowledge", "reliability"] },
+      { label: "흩어진 마음과 팀을 한곳으로 모은다", crests: ["friendship", "purity"] },
     ],
   },
   {
-    title: "다음 중 나를 가장 잘 설명하는 말은?",
+    title: "팀 안에서 내가 자연스럽게 맡는 역할은?",
     choices: [
-      { label: "위험 앞에서도 결단하는 편이다", crest: "courage" },
-      { label: "믿을 수 있는 동료가 되려 한다", crest: "friendship" },
-      { label: "진심이 얼굴과 말에 잘 드러난다", crest: "purity" },
-      { label: "상대가 상처받지 않게 먼저 살핀다", crest: "love" },
-      { label: "정보를 모아 판단하는 편이다", crest: "knowledge" },
-      { label: "맡은 일은 끝까지 책임진다", crest: "reliability" },
-      { label: "마지막 가능성을 쉽게 놓지 않는다", crest: "hope" },
-      { label: "분위기를 밝히고 회복시키는 편이다", crest: "light" },
+      { label: "앞에서 결정을 내리고 길을 튼다", crests: ["courage", "knowledge"] },
+      { label: "모두가 서로 믿게 연결한다", crests: ["friendship", "love"] },
+      { label: "맡은 일을 놓치지 않고 끝까지 챙긴다", crests: ["reliability", "hope"] },
+      { label: "분위기를 부드럽게 만들고 진심을 말한다", crests: ["purity", "light"] },
     ],
   },
   {
     title: "처음 만난 디지몬 파트너에게 나는...",
     choices: [
-      { label: "먼저 인사하고 어떤 존재인지 물어본다", crest: "purity" },
-      { label: "파트너가 되어 반갑다고 솔직히 말한다", crest: "friendship" },
-      { label: "디지털 월드에 대해 자세히 질문한다", crest: "knowledge" },
-      { label: "위험하지 않은지 조심스럽게 거리를 둔다", crest: "reliability" },
-      { label: "서로 믿을 수 있는 규칙을 정한다", crest: "friendship" },
-      { label: "다른 친구들에게 안전한지 확인한 뒤 소개한다", crest: "love" },
-      { label: "불안해 보이면 안심시켜 준다", crest: "light" },
-      { label: "함께라면 해낼 수 있다고 말한다", crest: "hope" },
-    ],
-  },
-  {
-    title: "디지몬을 인간 세계에서 숨겨야 한다면 나는...",
-    choices: [
-      { label: "함께 다니되 들키지 않게 동선을 짠다", crest: "courage" },
-      { label: "방 안에 안전한 공간을 만들고 조심시킨다", crest: "reliability" },
-      { label: "집이 비었을 때 편하게 돌아다니게 한다", crest: "purity" },
-      { label: "가족에게 솔직히 말하고 지내게 한다", crest: "light" },
-      { label: "사람들 앞에서는 인형이라고 둘러댄다", crest: "knowledge" },
-      { label: "친구들과 함께 돌볼 방법을 정한다", crest: "friendship" },
-      { label: "다치거나 외롭지 않게 계속 챙긴다", crest: "love" },
-      { label: "언젠가 이해받을 날이 올 거라 믿는다", crest: "hope" },
-    ],
-  },
-  {
-    title: "전투가 시작되면 가장 먼저 하는 일은?",
-    choices: [
-      { label: "상대의 약점을 찾는다", crest: "knowledge" },
-      { label: "모두가 준비됐는지 확인한다", crest: "reliability" },
-      { label: "친구들을 어떤 방식으로든 지원한다", crest: "friendship" },
-      { label: "누군가 다치기 전에 즉시 행동한다", crest: "courage" },
-      { label: "왜 공격하는지 이유를 보려 한다", crest: "purity" },
-      { label: "다친 사람이 생기지 않게 보호한다", crest: "love" },
-      { label: "밀리는 상황에서도 반격의 실마리를 찾는다", crest: "hope" },
-      { label: "겁먹은 동료가 다시 일어서게 돕는다", crest: "light" },
-    ],
-  },
-  {
-    title: "우리 팀에 내가 가장 잘 제공할 수 있는 것은?",
-    choices: [
-      { label: "마음이 무너진 사람을 위로하는 힘", crest: "light" },
-      { label: "계속 나아가게 만드는 동기", crest: "hope" },
-      { label: "모두가 협력하도록 잇는 역할", crest: "friendship" },
-      { label: "내 생각을 숨기지 않고 말하는 태도", crest: "purity" },
-      { label: "선택지를 파악하고 비교하는 능력", crest: "knowledge" },
-      { label: "끝까지 곁을 지키는 지지", crest: "love" },
-      { label: "해야 할 일을 정리하고 완수하는 책임감", crest: "reliability" },
-      { label: "누군가는 해야 할 일을 먼저 하는 추진력", crest: "courage" },
-    ],
-  },
-  {
-    title: "친구가 실수해서 모두가 위험해졌다면?",
-    choices: [
-      { label: "먼저 위험을 막고 나중에 이야기한다", crest: "courage" },
-      { label: "친구가 혼자 무너지지 않게 옆에 선다", crest: "love" },
-      { label: "실수의 원인을 차분히 정리한다", crest: "knowledge" },
-      { label: "책임질 부분과 다음 행동을 분명히 한다", crest: "reliability" },
-      { label: "그래도 우리는 한 팀이라고 말한다", crest: "friendship" },
-      { label: "속상한 마음을 숨기지 않고 함께 푼다", crest: "purity" },
-      { label: "아직 되돌릴 방법이 있다고 찾는다", crest: "hope" },
-      { label: "상처 난 분위기를 다시 살린다", crest: "light" },
+      { label: "바로 함께해보자고 말한다", crests: ["courage", "friendship"] },
+      { label: "불안하지 않게 먼저 안심시킨다", crests: ["love", "light"] },
+      { label: "어떤 존재인지 차근차근 물어본다", crests: ["knowledge", "purity"] },
+      { label: "서로 지킬 약속부터 정한다", crests: ["reliability", "hope"] },
     ],
   },
   {
     title: "마지막 문장이 빛나는 순간, 나는 어떤 마음에 가장 가깝나?",
     choices: [
-      { label: "두렵지만 물러서지 않겠다", crest: "courage" },
-      { label: "내 사람들을 끝까지 믿겠다", crest: "friendship" },
-      { label: "진심을 잃지 않겠다", crest: "purity" },
-      { label: "소중한 사람을 지키겠다", crest: "love" },
-      { label: "알아내고 이해해서 길을 찾겠다", crest: "knowledge" },
-      { label: "약속한 일은 반드시 해내겠다", crest: "reliability" },
-      { label: "끝났다고 보여도 포기하지 않겠다", crest: "hope" },
-      { label: "어둠 속에서도 다시 밝히겠다", crest: "light" },
+      { label: "두렵지만 물러서지 않겠다", crests: ["courage", "reliability"] },
+      { label: "내 사람들을 끝까지 믿겠다", crests: ["friendship", "love"] },
+      { label: "알아내고 이해해서 길을 찾겠다", crests: ["knowledge", "purity"] },
+      { label: "끝났다고 보여도 다시 밝히겠다", crests: ["hope", "light"] },
     ],
   },
 ];
 
-function getWeightedScores(answers: CrestKey[]) {
+function getWeightedScores(answers: Choice[]) {
   const scores = Object.keys(crests).reduce(
     (acc, key) => ({ ...acc, [key]: 0 }),
     {} as Record<CrestKey, number>,
   );
 
   answers.forEach((answer, index) => {
-    scores[answer] += index === questions.length - 1 ? 1.5 : 1;
+    const weight = index === questions.length - 1 ? 1.5 : 1;
+
+    answer.crests.forEach((crest) => {
+      scores[crest] += weight;
+    });
   });
 
   return scores;
+}
+
+function getLastMatchedIndex(answers: Choice[], crest: CrestKey) {
+  for (let index = answers.length - 1; index >= 0; index -= 1) {
+    if (answers[index].crests.includes(crest)) {
+      return index;
+    }
+  }
+
+  return -1;
 }
 
 const clubPhotos: Array<{ src: string; alt: string }> = [
@@ -433,7 +379,7 @@ function createShareId() {
 export default function Home() {
   const [hasStarted, setHasStarted] = useState(false);
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<CrestKey[]>([]);
+  const [answers, setAnswers] = useState<Choice[]>([]);
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [sharedResult, setSharedResult] = useState<CrestKey | null>(null);
@@ -505,7 +451,7 @@ export default function Home() {
         return weightedScores[b] - weightedScores[a];
       }
 
-      return answers.lastIndexOf(b) - answers.lastIndexOf(a);
+      return getLastMatchedIndex(answers, b) - getLastMatchedIndex(answers, a);
     })[0];
   }, [answers]);
 
@@ -513,8 +459,8 @@ export default function Home() {
   const current = questions[step];
   const progress = isDone ? 100 : (answers.length / questions.length) * 100;
 
-  const selectChoice = (crest: CrestKey) => {
-    const nextAnswers = [...answers.slice(0, step), crest];
+  const selectChoice = (choice: Choice) => {
+    const nextAnswers = [...answers.slice(0, step), choice];
     setAnswers(nextAnswers);
 
     if (step < questions.length - 1) {
@@ -697,14 +643,14 @@ export default function Home() {
             </div>
 
             <div className="splash-copy">
-              <p>8개의 문장 중</p>
+              <p>4개의 질문으로 빠르게</p>
               <h1>
                 디지몬
                 <span>나의 선택받은 문장은?</span>
               </h1>
               <div className="splash-actions">
                 <button className="start-button" onClick={startQuiz} type="button">
-                  검사 시작하기
+                  간편 검사 시작
                 </button>
                 <button className="club-button" onClick={() => setIsClubOpen(true)} type="button">
                   애니원 모임 소개
@@ -727,7 +673,7 @@ export default function Home() {
     const ranking = (Object.keys(crests) as CrestKey[])
       .map((key) => ({
         key,
-        score: answers.filter((answer) => answer === key).length,
+        score: weightedScores[key],
       }))
       .sort((a, b) => {
         if (sharedResult) {
@@ -739,8 +685,9 @@ export default function Home() {
           return weightedScores[b.key] - weightedScores[a.key];
         }
 
-        return answers.lastIndexOf(b.key) - answers.lastIndexOf(a.key);
+        return getLastMatchedIndex(answers, b.key) - getLastMatchedIndex(answers, a.key);
       });
+    const maxScore = questions.length + 0.5;
 
     return (
       <>
@@ -834,12 +781,12 @@ export default function Home() {
                   <div className="rank-bar">
                     <i
                       style={{
-                        width: `${sharedResult ? (key === sharedResult ? 100 : 0) : (score / questions.length) * 100}%`,
+                        width: `${sharedResult ? (key === sharedResult ? 100 : 0) : (score / maxScore) * 100}%`,
                         backgroundColor: crest.color,
                       }}
                     />
                   </div>
-                  <strong>{sharedResult ? (key === sharedResult ? "결과" : "") : score}</strong>
+                  <strong>{sharedResult ? (key === sharedResult ? "결과" : "") : score.toFixed(1).replace(".0", "")}</strong>
                 </div>
               );
             })}
@@ -864,14 +811,14 @@ export default function Home() {
 
         <p className="question-count">Question {step + 1} of {questions.length}</p>
         <h1>{current.title}</h1>
-        <p className="hint">답변은 하나만 선택해 주세요</p>
+        <p className="hint">4개 중 가장 가까운 답변을 하나만 선택해 주세요</p>
 
         <div className="choices">
           {current.choices.map((choice) => (
             <button
               className="choice"
-              key={`${choice.crest}-${choice.label}`}
-              onClick={() => selectChoice(choice.crest)}
+              key={`${choice.crests.join("-")}-${choice.label}`}
+              onClick={() => selectChoice(choice)}
               type="button"
             >
               <span className="checkmark" aria-hidden="true" />
